@@ -35,3 +35,75 @@ Pseudocode Structure:
     - Check game over conditions.
     - Render updated game state on the screen.
 - Display game over screen and final score.
+
+
+
+## Sample Code
+
+// Define constants
+const BOARD_WIDTH = 10;
+const BOARD_HEIGHT = 10;
+const PACMAN = 'P';
+const GHOST = 'G';
+const EMPTY = '.';
+const COIN = 'C';
+const POWER_UP = 'U';
+
+// Initialize game state
+let gameBoard = createEmptyBoard(BOARD_WIDTH, BOARD_HEIGHT);
+let pacmanPosition = { x: 0, y: 0 };
+let ghostPositions = [{ x: 8, y: 8 }, { x: 5, y: 5 }]; ?????
+let score = 0;
+let gameOver = false;
+
+// Function to create an empty game board
+function createEmptyBoard(width, height) {
+    let board = [];
+    for (let y = 0; y < height; y++) {
+        let row = [];
+        for (let x = 0; x < width; x++) {
+            row.push(EMPTY);
+        }
+        board.push(row);
+    }
+    return board;
+}
+
+// Function to render the game board
+function renderBoard() {
+    // Code to render the game board on the screen
+    // Use HTML elements or canvas to display the game board
+}
+
+// Function to handle Pac-Man movement
+function movePacman(direction) {
+    // Code to move Pac-Man based on direction
+    // Update pacmanPosition based on user input (up, down, left, right)
+}
+
+// Function to update game state
+function updateGameState() {
+    // Code to handle collision detection between Pac-Man and ghosts
+    // Check if Pac-Man's new position collides with any ghost's position
+    // Update game board with new positions after movement
+
+    // Code to handle coin collection and power-ups
+    // Check if Pac-Man's new position contains a coin or a power-up
+    // Update score accordingly
+    // Remove the collected coin or power-up from the game board
+
+    // Check for win or lose conditions
+    // If Pac-Man collides with a ghost, set gameOver to true
+    // If all coins or certain objectives are collected, set gameOver to true
+}
+
+// Game loop
+while (!gameOver) {
+    renderBoard(); // Render the game board
+    let userInput = getNextUserInput(); // Get user input (from keyboard or other input methods)
+    movePacman(userInput); // Move Pac-Man based on user input
+    updateGameState(); // Update game state after Pac-Man moves
+}
+
+// Display game over screen and final score
+displayGameOverScreen(score);
