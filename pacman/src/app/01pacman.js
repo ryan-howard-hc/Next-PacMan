@@ -1,7 +1,8 @@
-import React from 'react';
-import PacManBoard from './02pacboard.js';
+import React, { useState, useEffect } from 'react';
 
 const GamePage = () => {
+  const [pacManPosition, setPacManPosition] = useState({ x: 13, y: 24 });
+
   // boardData is a 2D array representing the game board
   const boardData = [
     ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'],
@@ -37,13 +38,67 @@ const GamePage = () => {
     ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'],
 
   ]
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      movePacMan(event.key);
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyPress);
+    };
+  }, [boardData]);
+
+
+
+  const movePacMan = (direction) => {
+    const { x: currentX, y: currentY } = pacManPosition;
+    let newX = currentX;
+    let newY = currentY;
+
+    switch (direction) {
+      case 'ArrowUp':
+        newY = currentY - 1;
+        break;
+      case 'ArrowDown':
+        newY = currentY + 1;
+        break;
+      case 'ArrowLeft':
+        newX = currentX - 1;
+        break;
+      case 'ArrowRight':
+        newX = currentX + 1;
+        break;
+      default:
+        return;
+    }
+
+    if (boardData[newY] && boardData[newY][newX] !== 'X') {
+      setPacManPosition({ x: newX, y: newY });
+    }
+  };
 
   return (
     <div className="game-container">
       <h1>Pac-Man Game</h1>
-      <PacManBoard boardData={boardData} />
+      <div className="grid grid-cols-30 gap-1">
+        {boardData.map((row, rowIndex) => (
+          <div key={rowIndex} className="flex">
+            {row.map((cell, columnIndex) => (
+              <div
+                key={`${rowIndex}-${columnIndex}`}
+                className={`w-10 h-10 border border-gray-300 ${getCellClass(cell)}`}
+              />
+            ))}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
 
 export default GamePage;
+
+
+export const useClient = true;
